@@ -22,21 +22,40 @@ var T = new Twit(config);
 // 	}
 // };
 
+
+//Stream
+
+//Setting up a user stream
+var stream = T.stream('user');
+
+// Any time someone follows me
+stream.on('follow', followed);
+
+function followed(eventMsg){
+	var name = eventMsg.source.name;
+	var screenName = eventMsg.source.screen_name;
+	tweetIt('@' + screenName + ' is this the Upside down?');
+
+}
+
+
+
+
 //POST
 
-tweetIt();
+// tweetIt();
 
 
-setInterval(tweetIt, 1000*60*60) //This will cause the bot to post to Twitter automatically (once per hour in this case)
+// setInterval(tweetIt, 1000*60*60) //This will cause the bot to post to Twitter automatically (once per hour in this case)
 
 
 
-function tweetIt(){
+function tweetIt(txt){
 
-  var r = Math.floor(Math.random()*100);
+  // var r = Math.floor(Math.random()*100);
 
   var tweet = {
-	status: 'Here is a random number ' + r 
+	status: txt 
   }
 
   T.post('statuses/update', tweet, tweeted);
