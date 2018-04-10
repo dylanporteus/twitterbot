@@ -29,13 +29,32 @@ var T = new Twit(config);
 var stream = T.stream('user');
 
 // Any time someone follows me
-stream.on('follow', followed);
+// stream.on('follow', followed);
 
-function followed(eventMsg){
-	var name = eventMsg.source.name;
-	var screenName = eventMsg.source.screen_name;
-	tweetIt('@' + screenName + ' is this the Upside down?');
+// function followed(eventMsg){
+// 	var name = eventMsg.source.name;
+// 	var screenName = eventMsg.source.screen_name;
+// 	tweetIt('@' + screenName + ' is this the Upside down?');
 
+// }
+
+
+
+stream.on('tweet', tweetEvent);
+
+function tweetEvent(eventMsg){
+	// var fs = require('fs');
+	// var json = JSON.stringify(eventMsg,null,2);
+	// fs.writeFile("tweet.json", json);
+
+	var replyTo = eventMsg.in_reply_to_screen_name;
+	var text = eventMsg.text;
+	var from = eventMsg.user.screen_name;
+
+	if (replyTo === 'dylan_mcvillain'){
+		var newTweet = '@' + from + ' thank you for tweeting me!';
+		tweetIt(newTweet);
+	}
 }
 
 
